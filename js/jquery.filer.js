@@ -244,7 +244,7 @@
 					_filesCheck: function() {
 						var s = 0;
 						if(n.limit && f.files.length + f._itFl.length > n.limit) {
-							alert(f._assets.textParse(n.captions.errors.filesLimit));
+							n.alertDialog(f._assets.textParse(n.captions.errors.filesLimit));
 							return false
 						}
 						for(var t = 0; t < f.files.length; t++) {
@@ -260,12 +260,12 @@
 									ext: x
 								};
 							if(n.extensions != null && $.inArray(x, n.extensions) == -1) {
-								alert(f._assets.textParse(n.captions.errors.filesType, m));
+								n.alertDialog(f._assets.textParse(n.captions.errors.filesType, m));
 								return false;
 								break
 							}
 							if((n.maxSize != null && f.files[t].size > n.maxSize * 1048576) || (n.fileMaxSize != null && f.files[t].size > n.fileMaxSize * 1048576)) {
-								alert(f._assets.textParse(n.captions.errors.filesSize, m));
+								n.alertDialog(f._assets.textParse(n.captions.errors.filesSize, m));
 								return false;
 								break
 							}
@@ -276,7 +276,7 @@
 							s += f.files[t].size
 						}
 						if(n.maxSize != null && s >= Math.round(n.maxSize * 1048576)) {
-							alert(f._assets.textParse(n.captions.errors.filesSizeAll));
+							n.alertDialog(f._assets.textParse(n.captions.errors.filesSizeAll));
 							return false
 						}
 						if((n.addMore || n.uploadFile)) {
@@ -454,7 +454,7 @@
 									.appendTo(appendTo);
 								l.on('click', n.templates._selectors.remove, function(e) {
 									e.preventDefault();
-									var cf = n.templates.removeConfirmation ? confirm(n.captions.removeConfirmation) : true;
+									var cf = n.templates.removeConfirmation ? n.confirmDialog(n.captions.removeConfirmation) : true;
 									if(cf) {
 										f._remove(params ? params.remove.event : e, params ? params.remove.el : $(this)
 											.closest(n.templates._selectors.item));
@@ -938,6 +938,8 @@
 		});
 	};
 	$.fn.filer.defaults = {
+		confirmDialog : confirm,
+		alertDialog : alert,
 		limit: null,
 		maxSize: null,
         fileMaxSize: null,

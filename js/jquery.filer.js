@@ -938,8 +938,12 @@
 		});
 	};
 	$.fn.filer.defaults = {
-		confirmDialog : confirm,
-		alertDialog : alert,
+		confirmDialog : function(text){
+			return confirm(text);
+		},
+		alertDialog : function(text) {
+			return alert(text)
+		},
 		limit: null,
 		maxSize: null,
         fileMaxSize: null,
